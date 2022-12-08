@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Offers and Coupons</string>
+    <string name="textview">TextView</string>
+    <string name="image_of_coupon">Image of coupon</string>
+    <string name="detalles_de_la_oferta">Detalles de la oferta</string>
+    <string name="description">Description</string>
+    <string name="oferta">Oferta</string>
+    <string name="website">Website</string>
+    <string name="valido_hasta">Valido hasta</string>
+    <string name="get_offer">Obtén esta Oferta</string>
+    <string name="offer_list">Lista de Ofertas</string>
+    <string name="offer_image">offer image</string>
 </resources>

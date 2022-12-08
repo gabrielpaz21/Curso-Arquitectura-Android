@@ -1,7 +1,7 @@
 package com.anncode.offersandcoupons
 
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +10,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 
-class RecyclerCouponsAdapter(var coupons : ArrayList<Coupon>, var resource: Int) : RecyclerView.Adapter<RecyclerCouponsAdapter.CardCouponHolder>() {
+class RecyclerCouponsAdapter(private var coupons : ArrayList<Coupon>, private var resource: Int) : RecyclerView.Adapter<RecyclerCouponsAdapter.CardCouponHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): CardCouponHolder {
-        var view: View = LayoutInflater.from(p0!!.context).inflate(resource, p0, false)
+        val view: View = LayoutInflater.from(p0.context).inflate(resource, p0, false)
         return CardCouponHolder(view)
     }
 
@@ -22,7 +22,7 @@ class RecyclerCouponsAdapter(var coupons : ArrayList<Coupon>, var resource: Int)
     }
 
     override fun onBindViewHolder(p0: CardCouponHolder, p1: Int) {
-        var coupon = coupons.get(p1)
+        val coupon = coupons[p1]
         p0.setDataCard(coupon)
     }
 
@@ -41,16 +41,18 @@ class RecyclerCouponsAdapter(var coupons : ArrayList<Coupon>, var resource: Int)
 
         fun setDataCard(coupon: Coupon){
             this.coupon = coupon
-            Picasso.get().load(coupon.image_url).resize(520, 520).centerCrop().into(imgCoupon)
-            tvTitle.setText(coupon.title)
-            tvDescriptionShort.setText(coupon.descriptionShort)
-            tvCategory.setText(coupon.category)
-            tvDate.setText(coupon.endDate)
+
+            if (coupon.imageUrl.isEmpty()) coupon.imageUrl = "https://c.cfjump.com/Avatars/ECED3475-931C-41F1-B3CD-513CD7FDFDCA.png"
+            Picasso.get().load(coupon.imageUrl).resize(520, 520).centerCrop().into(imgCoupon)
+            tvTitle.text = coupon.title
+            tvDescriptionShort.text = coupon.descriptionShort
+            tvCategory.text = coupon.category
+            tvDate.text = coupon.endDate
 
         }
 
         override fun onClick(v: View) {
-            Log.i("CLICK Coupon: ", coupon?.title)
+            Log.i("CLICK Coupon: ", coupon?.title.toString())
             val context = v.context
             val showPhotoIntent = Intent(context, CouponDetailActivity::class.java)
             showPhotoIntent.putExtra("COUPON", coupon)
