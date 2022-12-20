@@ -57,7 +57,6 @@ class RecyclerCouponsAdapter(private var coupons : ArrayList<Coupon>, private va
             val showPhotoIntent = Intent(context, CouponDetailActivity::class.java)
             showPhotoIntent.putExtra("COUPON", coupon)
             context.startActivity(showPhotoIntent)
-
         }
 
     }

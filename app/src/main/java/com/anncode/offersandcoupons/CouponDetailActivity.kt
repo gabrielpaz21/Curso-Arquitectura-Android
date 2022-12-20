@@ -11,7 +11,6 @@ import com.anncode.offersandcoupons.databinding.ActivityCouponDetailBinding
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
-
 class CouponDetailActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityCouponDetailBinding
