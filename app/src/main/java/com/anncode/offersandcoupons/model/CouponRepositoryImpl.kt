@@ -1,8 +1,7 @@
 package com.anncode.offersandcoupons.model
 
 import android.util.Log
-
-import com.anncode.offersandcoupons.presenter.CouponPresenter
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -10,11 +9,15 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class CouponRepositoryImpl(var couponPresenter: CouponPresenter) : CouponRepository {
+class CouponRepositoryImpl : CouponRepository {
 
-    override fun getCouponApi() {
+    private var coupons = MutableLiveData<List<Coupon>>()
 
-        val coupons:ArrayList<Coupon> = ArrayList()
+    override fun getCoupons() : MutableLiveData<List<Coupon>> =  coupons
+
+    override fun callCouponsApi() {
+
+        val couponsList: ArrayList<Coupon> = ArrayList()
         val apiService = ApiAdapter().getClientService()
         val call = apiService.getCoupons()
 
@@ -27,7 +30,7 @@ class CouponRepositoryImpl(var couponPresenter: CouponPresenter) : CouponReposit
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
 
-                if(response.body()!!.get("offers").isJsonNull) {
+                if (response.body()!!.get("offers").isJsonNull) {
                     //Toast.makeText(this, "Error connecting to the service", Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -37,10 +40,9 @@ class CouponRepositoryImpl(var couponPresenter: CouponPresenter) : CouponReposit
                 offersJsonArray?.forEach { jsonElement: JsonElement ->
                     val jsonObject = jsonElement.asJsonObject
                     val coupon = Coupon(jsonObject)
-                    coupons.add(coupon)
+                    couponsList.add(coupon)
                 }
-
-                couponPresenter.showCoupons(coupons)
+                coupons.value = couponsList
             }
 
         })
